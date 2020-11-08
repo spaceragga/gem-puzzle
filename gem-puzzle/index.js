@@ -88,7 +88,9 @@ function Game(context, cellSize){
 			arr[nullY][nullX] = arr[y][x];
 			arr[y][x] = 0;
 			clicks++;
+			// count.innerHTML = `Count: ${game.getClicks() + 1}`;
 		}
+
 	};
   
 
@@ -146,17 +148,31 @@ function Game(context, cellSize){
 //Воспользуемся событием полной загрузки документа, определим наш холст, контекст рисования и создадим объект класса Game.
 window.onload = function(){
 	const mainInfo = document.createElement("div");
+	const timer = document.createElement("span");
 	const newDiv = document.createElement("CANVAS");
-	const count = document.createElement("p");
+	var count = document.createElement("p");
 	
 	document.body.insertAdjacentElement('afterbegin', mainInfo);
-	mainInfo.insertAdjacentElement('afterend', newDiv);
 	mainInfo.insertAdjacentElement('afterbegin', count);
+	mainInfo.appendChild(timer);
+	mainInfo.insertAdjacentElement('afterend', newDiv);
 
 	count.innerHTML = `Count: 0`;
 
 	count.id = "count";
     newDiv.id = "canvas";
+
+	let counte = 0;
+	let timerId = setInterval(() => {
+		counte += 1;
+		timer.innerHTML = `${Math.floor(counte / 60).toString().padStart(2, "0")}:${(counte % 60).toString().padStart(2, "0")}`;
+		}, 1000);
+
+		// const renderTimer = () => {
+		// 	counte += 1;
+		// 	timer.innerHTML = `${Math.floor(counte / 60).toString().padStart(2, "0")}:${(counte % 60).toString().padStart(2, "0")}`;
+		//   }
+		//   const timero = setInterval(renderTimer, 1000)
 
 	var canvas = document.getElementById("canvas");
 	    canvas.width  = 320;
@@ -178,7 +194,7 @@ window.onload = function(){
     var x = (e.pageX - canvas.offsetLeft) / cellSize | 0;
     var y = (e.pageY - canvas.offsetTop)  / cellSize | 0;
 	console.log(e.pageY, canvas.offsetTop, cellSize);
-	count.innerHTML = `Count: ${game.getClicks() + 1}`;
+	// count.innerHTML = `Count: ${game.getClicks() + 1}`;
     event(x, y); 
   };
 
@@ -192,7 +208,9 @@ window.onload = function(){
   function event(x, y) { 
     game.move(x, y);
     context.fillRect(0, 0, canvas.width, canvas.height);
-    game.draw();
+	game.draw();
+	count.innerHTML = `Count: ${game.getClicks()}`;
+
     if (game.victory()) {
       alert("Собрано за "+game.getClicks()+" касание!"); 
       game.mix(300);
