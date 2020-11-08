@@ -1,22 +1,45 @@
 const path = require('path')
-const HTMLWebpackPlugin = require('html-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin')
 
 module.exports = {
     entry: {
-        main: './index.js'
+        main: path.resolve(__dirname, './index.js'),
     },
     output: {
-        filename: '[name].[contenthash].js',
-        path: path.resolve(__dirname, 'dist')
+        filename: '[name].bundle.js',
+        path: path.resolve(__dirname, './dist')
     },
     resolve: {
         extensions: ['.js', '.json']
     },
     plugins: [
-        new HTMLWebpackPlugin({
-            template: './index.html'
-        }),
-        new CleanWebpackPlugin()
-    ]
+        new HtmlWebpackPlugin({ template: './index.html' }),
+      
+    ],
+    module: {
+        rules: [
+            // JavaScript
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                use: ['babel-loader'],
+            },
+             // изображения
+             {
+                test: /\.(?:ico|gif|png|jpg|jpeg)$/i,
+                type: 'asset/resource',
+            },
+                // шрифты и SVG
+            {
+                    test: /\.(woff(2)?|eot|ttf|otf|svg|)$/,
+                    type: 'asset/inline',
+            },
+                // CSS, PostCSS, Sass
+            {
+                test: /\.(scss|css)$/,
+                use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader'],
+            },
+        ],
+    }
 }

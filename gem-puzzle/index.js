@@ -1,3 +1,4 @@
+import './style.css';
 // const post = new Post ('Webpack');
 
 // Начнем с того, что создадим класс Game, который будет представлять собой Пятнашки в целом. 
@@ -149,18 +150,25 @@ function Game(context, cellSize){
 window.onload = function(){
 	const mainInfo = document.createElement("div");
 	const timer = document.createElement("span");
-	const newDiv = document.createElement("CANVAS");
+	const canvasWrap = document.createElement("CANVAS");
 	var count = document.createElement("p");
-	
+	const wrapper = document.createElement("div");
+	const popup = document.createElement("div");
+	popup.classList.add('popup');
+	popup.setAttribute('id', 'popup');
+	wrapper.classList.add('dashboard');
 	document.body.insertAdjacentElement('afterbegin', mainInfo);
-	mainInfo.insertAdjacentElement('afterbegin', count);
+	mainInfo.after(wrapper);
+	wrapper.insertAdjacentElement('afterbegin', canvasWrap);
 	mainInfo.appendChild(timer);
-	mainInfo.insertAdjacentElement('afterend', newDiv);
+	mainInfo.insertAdjacentElement('afterbegin', count); 
+	canvasWrap.after(popup);
+	createMenu();
 
 	count.innerHTML = `Count: 0`;
 
 	count.id = "count";
-    newDiv.id = "canvas";
+    canvasWrap.id = "canvas";
 
 	let counte = 0;
 	let timerId = setInterval(() => {
@@ -219,4 +227,30 @@ window.onload = function(){
     }
   }
 }
+
+
+// Начало menu
+
+function createMenu(){
+	const menu = document.createElement('div');
+	menu.setAttribute('id','menuList');
+	menu.setAttribute('class','menuList');
+
+	const menuListItems = ['New Game','Saved games','Best score','Rules', 'Settings'];
+	document.getElementById('popup').appendChild(menu);
+	menuListItems.forEach(renderMenuList);
+
+	function renderMenuList(element) {
+		const button = document.createElement('button');
+		button.setAttribute('class','item');
+
+		menu.appendChild(button);
+
+		button.innerHTML=button.innerHTML + element;
+	}
+
+}
+
+
+
  
