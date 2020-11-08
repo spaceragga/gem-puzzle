@@ -6,7 +6,15 @@ canvas{
     border:2px solid #333;
 }
 
+.mainInfo{
+    display: flex;
+    justify-content: space-between;
+    align-self: center;
+    width: 320px;
+}
+
 .popup {
+    visibility: hidden;
     font-size: 100%;
     font-family: 'Ubuntu', Arial, sans-serif;
     margin: 0;
@@ -46,4 +54,15 @@ canvas{
     color: rgb(74, 202, 24);
     border: none;
     font-size: 20px;
+}
+
+.pauseBtn{
+    border: none;
+    background: none;
+
+}
+.pauseBtn:focus{
+    border: none;
+    background: none;
+
 }

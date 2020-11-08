@@ -149,21 +149,37 @@ function Game(context, cellSize){
 //Воспользуемся событием полной загрузки документа, определим наш холст, контекст рисования и создадим объект класса Game.
 window.onload = function(){
 	const mainInfo = document.createElement("div");
+	mainInfo.setAttribute('class', 'mainInfo');
 	const timer = document.createElement("span");
+	const pauseGame = document.createElement("button");
+	pauseGame.innerHTML='Pause Game';
+	pauseGame.setAttribute('class', 'pauseBtn');
 	const canvasWrap = document.createElement("CANVAS");
 	var count = document.createElement("p");
+
 	const wrapper = document.createElement("div");
-	const popup = document.createElement("div");
-	popup.classList.add('popup');
-	popup.setAttribute('id', 'popup');
-	wrapper.classList.add('dashboard');
+	wrapper.setAttribute('id', 'dashboard');
+	
 	document.body.insertAdjacentElement('afterbegin', mainInfo);
 	mainInfo.after(wrapper);
 	wrapper.insertAdjacentElement('afterbegin', canvasWrap);
 	mainInfo.appendChild(timer);
+	mainInfo.appendChild(pauseGame);
 	mainInfo.insertAdjacentElement('afterbegin', count); 
-	canvasWrap.after(popup);
 	createMenu();
+
+	// показать/спрятать меню 
+	document.getElementsByClassName("pauseBtn")[0].onclick = function(){
+		const element = document.getElementById("popup");
+		const dashboard = document.getElementById('dashboard');
+		if(element.style.visibility == "visible") {
+			dashboard.classList.remove('dashboard');
+			element.style.visibility = 'hidden';		
+		}else{
+			element.style.visibility = 'visible';
+			dashboard.classList.add('dashboard');
+		}
+	};
 
 	count.innerHTML = `Count: 0`;
 
@@ -232,6 +248,13 @@ window.onload = function(){
 // Начало menu
 
 function createMenu(){
+	const popup = document.createElement("div");
+	popup.classList.add('popup');
+	popup.setAttribute('id', 'popup');
+
+	const canvasEl = document.getElementsByTagName('canvas')[0];
+	canvasEl.after(popup);
+
 	const menu = document.createElement('div');
 	menu.setAttribute('id','menuList');
 	menu.setAttribute('class','menuList');
@@ -250,7 +273,3 @@ function createMenu(){
 	}
 
 }
-
-
-
- 
