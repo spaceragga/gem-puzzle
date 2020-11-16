@@ -1,6 +1,10 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable func-names */
+/* eslint-disable no-bitwise */
 /* eslint-disable no-plusplus */
 import './style.css';
+// eslint-disable-next-line import/extensions
+import { setScore } from './score.js';
 // const post = new Post ('Webpack');
 
 // Начнем с того, что создадим класс Game, который будет представлять собой Пятнашки в целом.
@@ -57,6 +61,7 @@ function Game(context, cellSize) {
     // canvas.height = 320;
     // const context = canvas.getContext('2d');
     if (picture === true) {
+      // eslint-disable-next-line max-len
       context.drawImage(img, y, x, cellSize - 2, cellSize - 2, j + 1, i + 1, cellSize - 2, cellSize - 2);
     } else {
       context.fillStyle = '#8edf58';
@@ -80,6 +85,7 @@ function Game(context, cellSize) {
 
   // — метод getNullCell возвращает позицию пустой клетки в массиве.
 
+  // eslint-disable-next-line consistent-return
   this.getNullCell = function () {
     for (let i = 0; i < 4; i++) {
       for (let j = 0; j < 4; j++) {
@@ -92,6 +98,7 @@ function Game(context, cellSize) {
 
   // — метод draw отрисовывает всю игру.
 
+  // eslint-disable-next-line consistent-return
   const getIndex = (el) => {
     for (let k = 0; k < initArr.length; k++) {
       for (let l = 0; l < initArr.length; l++) {
@@ -202,24 +209,6 @@ function setTimer() {
   }
 }
 
-// заполнение таблицы рекордов
-
-function setScore() {
-  const allScore123 = JSON.parse(localStorage.getItem('allScore123'));
-  allScore123.sort((a, b) => ((a[0] + a[1]) - (b[0] + b[1])));
-
-  for (let i = 0; i < 10; i++) {
-    if (!allScore123[i]) break;
-    document.getElementById(`scoreList${i + 1}`).innerHTML = `Время: 
-    ${Math.floor(allScore123[i][0] / 60).toString().padStart(2, '0')}:${(allScore123[i][0] % 60).toString().padStart(2, '0')}
-     Ходов: ${allScore123[i][1]}`;
-  }
-// allScore123.forEach((el, ind) => {
-// document.getElementById(`scoreList${ind + 1}`).innerHTML = `Время: 
-// ${Math.floor(el[0] / 60).toString().padStart(2, '0')}:${(el[0] % 60).toString().padStart(2, '0')}
-//      Ходов: ${el[1]}`;
-// });
-}
 // Воспользуемся событием полной загрузки документа, определим наш холст,
 // контекст рисования и создадим объект класса Game.
 
@@ -259,15 +248,15 @@ function newGame() {
 
     if (game.victory()) {
       const timer = document.getElementById('timer');
-      let allScore123 = JSON.parse(localStorage.getItem('allScore123'));
+      let allScore = JSON.parse(localStorage.getItem('allScore'));
       alert(`Ура! Вы решили головоломку за ${timer.innerHTML} и ${game.getClicks()} ходов!`);
 
-      if (allScore123 === null) {
-        allScore123 = Array([counte, clicks]);
+      if (allScore === null) {
+        allScore = Array([counte, clicks]);
       } else {
-        allScore123.push([counte, clicks]);
+        allScore.push([counte, clicks]);
       }
-      localStorage.setItem('allScore123', JSON.stringify(allScore123));
+      localStorage.setItem('allScore', JSON.stringify(allScore));
 
       counte = 0;
       clicks = 0;
@@ -458,13 +447,10 @@ function createMenu() {
     saveMenuListItems.forEach(renderSaveList);
 
     const saveListButtons = document.querySelectorAll('#saveListButtons');
-    // ==========================
     saveListButtons[0].addEventListener('click', () => {
       localStorage.setItem('savedGame', JSON.stringify(arrLast));
       localStorage.setItem('savedScore', JSON.stringify([counte, clicks]));
     });
-
-    // в загрузке игры пофиксить время и ходы
 
     saveListButtons[1].addEventListener('click', () => {
       loadGame = true;
@@ -534,12 +520,20 @@ function createMenu() {
 
     popup.appendChild(rulesMenu);
 
+    const p = document.createElement('p');
+    rulesMenu.appendChild(p);
+
     const button = document.createElement('button');
     button.setAttribute('class', 'item');
     button.setAttribute('id', 'rulesButton');
 
     rulesMenu.appendChild(button);
     button.innerHTML += 'Go back';
+
+    p.innerHTML = `Цифры специально оставлены в неизменённом виде для ненавязчивости. 
+    Картинка меняется на новую при перезагрузке страницы. 
+    Таблица рекордов по лучшему времени и кол-ву ходов.
+    Удачи в игре!`;
 
     const rulesButton = document.querySelector('#rulesButton');
 
