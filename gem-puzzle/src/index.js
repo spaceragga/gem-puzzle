@@ -147,7 +147,7 @@ function Game(context, cellSize) {
       clicks++;
       arrLast = arr;
       if (counte !== 0 && sound === true) {
-        audio.src = '/sound/trigger-button.mp3';
+        audio.src = './sound/trigger-button.mp3';
         audio.autoplay = true;
       }
     }
@@ -623,12 +623,12 @@ function createMenu() {
 }
 
 window.onload = function () {
-  imagesArr = ['../assets/1.jpg', '../assets/2.jpg', '../assets/3.jpg',
-    '../assets/4.jpg',
-    '../assets/5.jpg',
-    '../assets/6.jpg',
-    '../assets/7.jpg',
-    '../assets/8.jpg'];
+  imagesArr = ['./assets/1.jpg', './assets/2.jpg', './assets/3.jpg',
+    './assets/4.jpg',
+    './assets/5.jpg',
+    './assets/6.jpg',
+    './assets/7.jpg',
+    './assets/8.jpg'];
   createMenu();
 
   img.src = getImage();
