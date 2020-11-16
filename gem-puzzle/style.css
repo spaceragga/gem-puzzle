@@ -4,17 +4,22 @@ body {
 
 canvas{
     border:2px solid #333;
+    width: 400px;
+    height: 400px;
+    /* display: contents; */
 }
 
 .mainInfo{
     display: flex;
     justify-content: space-between;
+    align-items: center;
     align-self: center;
-    width: 320px;
+    width: 404px;
+    font: 400 20px Arial;
 }
 
 .popup {
-    visibility: hidden;
+    /* visibility: hidden; */
     font-size: 100%;
     font-family: 'Ubuntu', Arial, sans-serif;
     margin: 0;
@@ -28,7 +33,7 @@ canvas{
     top: 50%;
     width: 100%;
     height: 100%;
-    -webkit-transition: all .1s ease-in;
+    /* -webkit-transition: all .1s ease-in; */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -38,8 +43,8 @@ canvas{
 }
 .dashboard {
     position: relative;
-    height: 325px;
-    width: 325px;
+    height: 405px;
+    width: 405px;
 }
 
 .menuList {
@@ -58,11 +63,31 @@ canvas{
 
 .pauseBtn{
     border: none;
+    outline: none;
     background: none;
 
+    width: 122px;
+    padding: 0;
+
+    font: 400 18px Arial;
+    text-align: end;
 }
 .pauseBtn:focus{
     border: none;
     background: none;
 
 }
+
+[hidden] {
+    display: none;
+}
+
+#count {
+    width: 110px;
+}
+
+/* button, 
+button:active, 
+button:focus {
+    outline: none;
+} */
